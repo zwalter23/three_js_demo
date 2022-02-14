@@ -69,6 +69,24 @@ function main() {
   walls[2].position.set(0, 2 * wallPos, 0);
   walls[3].position.set(wallPos * -1, wallPos, 0);
 
+  // floor & texture
+  var textureLoader = new THREE.TextureLoader();
+  floorTexture = textureLoader.load("texture/brick_03.png");
+  floorNormalMap = textureLoader.load("texture/brick_03_nrm.png");
+
+  meshFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(wallWidth, wallWidth, 10, 10),
+    new THREE.MeshPhongMaterial({
+      color: 0xffffff,
+      map: floorTexture,
+      normalMap: floorNormalMap,
+    })
+  );
+  meshFloor.position.z -= wallHeight / 2;
+  meshFloor.position.y += wallPos;
+  meshFloor.receiveShadow = true;
+  scene.add(meshFloor);
+
   // setup light
   ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   scene.add(ambientLight);
