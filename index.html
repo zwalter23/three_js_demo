@@ -5,9 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Three JS Demo</title>
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
+    <div id="input-container">
+      <div id="width-setter">
+        <input id="width-input" type="text" value="Width" />
+      </div>
+      <div id="height-setter">
+        <input id="height-input" type="text" value="Height" />
+      </div>
+      <div id="depth-setter">
+        <input id="depth-input" type="text" value="Thickness" />
+      </div>
+      <button id="input-submitter">Set</button>
+    </div>
+    <div id="coordinate-container"></div>
     <script src="js/three.js"></script>
     <script src="js/main.js"></script>
   </body>
