@@ -10,7 +10,7 @@ inputSubmitter.addEventListener("click", function () {
     parseInt(heightInput.value),
     parseInt(depthInput.value)
   );
-  console.log(data);
+  main();
 });
 
 function main() {
@@ -64,7 +64,7 @@ function main() {
 
   var wallPos = (wallWidth - wallThickness) / 2;
 
-  walls[0].position.set(wallPos, 0, 0);
+  walls[0].position.set(0, 0, 0);
   walls[1].position.set(wallPos, wallPos, 0);
   walls[2].position.set(0, 2 * wallPos, 0);
   walls[3].position.set(wallPos * -1, wallPos, 0);
@@ -104,4 +104,3 @@ function main() {
   }
   animate();
 }
-main();
