@@ -5,7 +5,12 @@ inputSubmitter.addEventListener("click", function () {
   var widthInput = document.getElementById("width-input");
   var heightInput = document.getElementById("height-input");
   var depthInput = document.getElementById("depth-input");
-  data.push(widthInput.value, heightInput.value, depthInput.value);
+  data.push(
+    parseInt(widthInput.value),
+    parseInt(heightInput.value),
+    parseInt(depthInput.value)
+  );
+  console.log(data);
 });
 
 function main() {
@@ -24,9 +29,9 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   // set wall width, height, thickness
-  var wallWidth = parseInt(data[0]);
-  var wallHeight = parseInt(data[1]);
-  var wallThickness = parseInt(data[2]);
+  var wallWidth = data[0];
+  var wallHeight = data[1];
+  var wallThickness = data[2];
 
   // adjust camera position
   camera.position.z = wallWidth * 2;
@@ -56,6 +61,24 @@ function main() {
     walls[i].receiveShadow = true;
     scene.add(walls[i]);
   }
+
+  var wallPos = (wallWidth - wallThickness) / 2;
+
+  walls[0].position.set(wallPos, 0, 0);
+  walls[1].position.set(wallPos, wallPos, 0);
+  walls[2].position.set(0, 2 * wallPos, 0);
+  walls[3].position.set(wallPos * -1, wallPos, 0);
+
+  // setup light
+  ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+  scene.add(ambientLight);
+
+  light = new THREE.PointLight(0xffffff, 0.8, 18);
+  light.position.set(0, wallHeight, wallWidth);
+  light.castShadow = true;
+  light.shadow.camera.near = 0.1;
+  light.shadow.camera.far = wallWidth * wallWidth;
+  scene.add(light);
 
   function animate() {
     requestAnimationFrame(animate);
