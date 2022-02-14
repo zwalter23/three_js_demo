@@ -6,7 +6,6 @@ inputSubmitter.addEventListener("click", function () {
   var heightInput = document.getElementById("height-input");
   var depthInput = document.getElementById("depth-input");
   data.push(widthInput.value, heightInput.value, depthInput.value);
-  console.log(data);
 });
 
 function main() {
@@ -25,13 +24,38 @@ function main() {
   document.body.appendChild(renderer.domElement);
 
   // set wall width, height, thickness
-  var wallWidth = data[0];
-  var wallHeight = data[1];
-  var wallThickness = data[2];
+  var wallWidth = parseInt(data[0]);
+  var wallHeight = parseInt(data[1]);
+  var wallThickness = parseInt(data[2]);
 
   // adjust camera position
   camera.position.z = wallWidth * 2;
   camera.position.y = wallHeight;
+
+  // initialize geometry
+  const geometry = new THREE.BoxGeometry(wallWidth, wallHeight, wallThickness);
+
+  // initialize material
+  const material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+
+  // number of walls
+  var wallNum = 4;
+
+  // wall creator
+  var walls = [];
+  for (let w = 0; w < wallNum; w++) {
+    walls.push(new THREE.Mesh(geometry, material));
+  }
+
+  // wall setter
+  for (let i = 0; i < walls.length; i++) {
+    walls[i].rotation.x -= Math.PI / 2;
+    if (i % 2 > 0) {
+      walls[i].rotation.y -= Math.PI / 2;
+    }
+    walls[i].receiveShadow = true;
+    scene.add(walls[i]);
+  }
 
   function animate() {
     requestAnimationFrame(animate);
